@@ -26,13 +26,23 @@ import cn.bingoogolapple.androidcommon.adapter.BGAViewHolderHelper;
  */
 //RecyclerView.Adapter<RecyclerView.ViewHolder>
 public class TopNewsAdapter extends BGARecyclerViewAdapter<TopNewsModel.DataBean> {
+    private int myitem = 99999;
+
     public TopNewsAdapter(RecyclerView recyclerView) {
         super(recyclerView, R.layout.item_top_new);
     }
 
+    public void mygetitem(int item) {
+        this.myitem = item;
+    }
+
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, TopNewsModel.DataBean model) {
-
+        if (myitem == position) {
+            helper.setVisibility(R.id.mytv, View.VISIBLE);
+        } else {
+            helper.setVisibility(R.id.mytv, View.GONE);
+        }
         helper.setText(R.id.topnewstitle, model.getTitle());
         helper.setText(R.id.topnewstime, model.getDate());
         if (model.getThumbnail_pic_s() != null && model.getThumbnail_pic_s02() != null && model.getThumbnail_pic_s03() != null) {

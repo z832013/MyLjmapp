@@ -3,6 +3,7 @@ package com.example.jxgg.mynewsapp;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
@@ -30,19 +31,19 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @ViewInject(R.id.maintab)
     private TabLayout maintab;
     @ViewInject(R.id.pager)
-    private ViewPager pager;
+    private ViewPager pager;//
     @ViewInject(R.id.activity_main)
     private DrawerLayout activity_main;
     @ViewInject(R.id.mytoolbar)
     private Toolbar mytoolbar;
     @ViewInject(R.id.mynav)
     private NavigationView mynav;
-
+    private long newTime;
 
     private Mainpageradapter adapter;
 
     ArrayList<Fragment> fragmentList = new ArrayList<>();
-    String[][] tabstring = new String[][]{{"头条", "top"}, {"社会", "shehui"}, {"国内", "guonei"}, {"国际", "guoji"}, {"娱乐", "yule"}, {"体育", "tiyu"}, {"军事", "junshi"}, {"科技", "keji"}, {"财经", "caijing"}, {"时尚", "shishang"}};
+    String[][] tabstring = new String[][]{{"微信","wx"},{"头条", "top"}, {"社会", "shehui"}, {"国内", "guonei"}, {"国际", "guoji"}, {"娱乐", "yule"}, {"体育", "tiyu"}, {"军事", "junshi"}, {"科技", "keji"}, {"财经", "caijing"}, {"时尚", "shishang"}};
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -84,5 +85,28 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return true;
+    }
+
+    /**
+     * 监听返回键
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (activity_main.isDrawerOpen(mynav)) {
+            activity_main.closeDrawers();
+            return;
+        }
+
+
+        if (System.currentTimeMillis() - newTime > 2000) {
+            newTime = System.currentTimeMillis();
+            Snackbar snackbar = Snackbar.make(activity_main, "再按一次返回键退出程序", Snackbar.LENGTH_SHORT);
+            snackbar.getView().setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+            snackbar.show();
+            //Toast.makeText(this, "再按一次返回键退出程序", Toast.LENGTH_SHORT).show();
+        } else {
+            finish();
+        }
     }
 }

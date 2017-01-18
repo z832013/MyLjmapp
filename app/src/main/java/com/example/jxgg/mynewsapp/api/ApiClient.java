@@ -2,6 +2,7 @@ package com.example.jxgg.mynewsapp.api;
 
 import com.sedigital.selogutil.SELogUtil;
 
+import org.xutils.common.util.LogUtil;
 import org.xutils.http.RequestParams;
 
 /**
@@ -22,7 +23,20 @@ public class ApiClient {
         RequestParams params=new RequestParams(Httpurls.GET_NEWS);
         params.addBodyParameter("type", tab);
         params.addBodyParameter("key", Httpurls.APPKEY_TOP);
-        SELogUtil.logE("我的地址："+params);
+        HttpTools.post(params,callBack);
+    }
+
+    /**
+     * 微信精选
+     * @param pon 		当前页数，默认1
+     * @param callBack
+     */
+    public void Getwx(String pon,HttpCallBack callBack){
+        RequestParams params=new RequestParams(Httpurls.WX);
+        params.addBodyParameter("pno", pon);
+        params.addBodyParameter("ps", "20");
+        params.addBodyParameter("dtype", "json");
+        params.addBodyParameter("key", Httpurls.APPKEY_WX);
         HttpTools.post(params,callBack);
     }
 }
