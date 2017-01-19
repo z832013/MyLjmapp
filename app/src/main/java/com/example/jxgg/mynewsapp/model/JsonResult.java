@@ -14,7 +14,25 @@ import java.io.IOException;
 public class JsonResult {
     private String reason;
     private String result;
+    private String data;
+    private String message;
     private int error_code;
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     public String getReason() {
         return reason;
@@ -41,13 +59,15 @@ public class JsonResult {
     }
 
     public static JsonResult parse(String json) throws IOException {
-        JsonResult jsonResult=new JsonResult();
+        JsonResult jsonResult = new JsonResult();
         try {
-            JSONObject jsonObject= JSON.parseObject(json);
+            JSONObject jsonObject = JSON.parseObject(json);
             jsonResult.setResult(jsonObject.getString("result"));
             jsonResult.setReason(jsonObject.getString("reason"));
-        }catch (JSONException e){
-            SELogUtil.logE("错误："+e);
+            jsonResult.setMessage(jsonObject.getString("message"));
+            jsonResult.setData(jsonObject.getString("data"));
+        } catch (JSONException e) {
+            SELogUtil.logE("错误：" + e);
         }
 
         return jsonResult;

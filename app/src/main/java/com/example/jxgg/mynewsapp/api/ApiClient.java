@@ -11,32 +11,40 @@ import org.xutils.http.RequestParams;
 
 public class ApiClient {
     private static ApiClient myapi;
-    public static ApiClient getapi(){
-        if (myapi==null){
-            myapi=new ApiClient();
+
+    public static ApiClient getapi() {
+        if (myapi == null) {
+            myapi = new ApiClient();
         }
         return myapi;
     }
 
 
-    public void GetTopNews(String tab,HttpCallBack callBack){
-        RequestParams params=new RequestParams(Httpurls.GET_NEWS);
+    public void GetTopNews(String tab, HttpCallBack callBack) {
+        RequestParams params = new RequestParams(Httpurls.GET_NEWS);
         params.addBodyParameter("type", tab);
         params.addBodyParameter("key", Httpurls.APPKEY_TOP);
-        HttpTools.post(params,callBack);
+        HttpTools.post(params, callBack);
     }
 
     /**
      * 微信精选
-     * @param pon 		当前页数，默认1
+     *
+     * @param pon      当前页数，默认1
      * @param callBack
      */
-    public void Getwx(String pon,HttpCallBack callBack){
-        RequestParams params=new RequestParams(Httpurls.WX);
+    public void Getwx(String pon, HttpCallBack callBack) {
+        RequestParams params = new RequestParams(Httpurls.WX);
         params.addBodyParameter("pno", pon);
         params.addBodyParameter("ps", "20");
         params.addBodyParameter("dtype", "json");
         params.addBodyParameter("key", Httpurls.APPKEY_WX);
-        HttpTools.post(params,callBack);
+        HttpTools.post(params, callBack);
+    }
+
+    public void GetVideo(HttpCallBack callBack) {
+        RequestParams params = new RequestParams(
+                "http://is.snssdk.com/neihan/stream/mix/v1/?mpic=1&webp=1&essence=1&content_type=-104&message_cursor=-1");
+        HttpTools.post(params, callBack);
     }
 }

@@ -1,8 +1,11 @@
 package com.example.jxgg.mynewsapp.Fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,21 +48,27 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
     @ViewInject(R.id.mRecyclerView)
     private RecyclerView mRecyclerView;
     TopNewsAdapter adapter;
-    WxNewsAdapter wxNewsAdapter;
     private String mytab;
     View footView;
     TextView tv;
     ProgressBar pb;
-    private  WxModel wxModel;
+
     private LinearLayoutManager mLinearLayoutManager;
 
 
-    public static NewsFragment settab(String tab) {
-        NewsFragment newsFragment = new NewsFragment();
+    public static Fragment settab(Activity activity, String tab) {
         Bundle bundle = new Bundle();
-        bundle.putString("tab", tab);
-        newsFragment.setArguments(bundle);
-        return newsFragment;
+        if (tab == "wx") {
+            WxFragment wx = new WxFragment();
+            wx.setArguments(bundle);
+            return wx;
+        } else {
+            bundle.putString("tab", tab);
+            NewsFragment newsFragment = new NewsFragment();
+            newsFragment.setArguments(bundle);
+            return newsFragment;
+        }
+
     }
 
 
@@ -73,7 +82,6 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         pb = (ProgressBar) footView.findViewById(R.id.pb);
 //        footView = getActivity().getLayoutInflater().inflate(R.layout.item_footview, null, false);
         adapter = new TopNewsAdapter(mRecyclerView);
-        wxNewsAdapter = new WxNewsAdapter(mRecyclerView, footView);
 
 
     }
@@ -91,52 +99,7 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
         if (!mytab.equals("wx")) {
             mRecyclerView.setAdapter(adapter);
             gettopnews(mytab);
-        } else if (mytab.equals("wx")) {
-            mRecyclerView.setAdapter(wxNewsAdapter);
-            getwx(null);
         }
-    }
-
-    private void getwx(String pon) {
-        ApiClient.getapi().Getwx(pon, new HttpCallBack() {
-            @Override
-            public void onSuccess(String response) {
-                try {
-                    if (fresh != null) {
-                        fresh.setRefreshing(false);
-                    }
-                    JsonResult result = JsonResult.parse(response);
-                    LogUtil.e("微信返回：" + result.getReason() + "，错误号：" + result.getError_code() + "，信息：" + result.getResult());
-                    wxModel = JSON.parseObject(result.getResult(), WxModel.class);
-                    if (result.getError_code() == 0) {
-                        wxNewsAdapter.setData(wxModel.getList());
-                        wxNewsAdapter.notifyDataSetChanged();
-                        wxNewsAdapter.setOnRVItemClickListener(new BGAOnRVItemClickListener() {
-                            @Override
-                            public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-                                Intent intent = new Intent(mContext, WebActivity.class);
-                                intent.putExtra("url", wxModel.getList().get(position).getUrl());
-                                intent.putExtra("wx", "100");
-                                startActivity(intent);
-                            }
-                        });
-
-                    }
-                    myLoadMore(wxModel);
-                } catch (Exception e) {
-                    showToast("没有获取到数据，请刷新重试");
-                    if (fresh != null) {
-                        fresh.setRefreshing(false);
-                    }
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-
-            }
-        });
     }
 
     private void gettopnews(String tab) {
@@ -204,16 +167,10 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
                     LogUtil.e("我的totalItemCount：" + totalItemCount + "，lastVisibleItem：" + lastVisibleItem);
                     if (lastVisibleItem == (totalItemCount - 1)) {
                         LogUtil.e("到底了！！");
-                        if (mytab.equals("wx")) {
-                            int i = 1;
-                            ++i;
-                            getwx(i + "");
-                            wxNewsAdapter.mygetitem(lastVisibleItem);
-                            wxNewsAdapter.notifyDataSetChanged();
-                        } else {
-                            adapter.mygetitem(lastVisibleItem);
-                            adapter.notifyDataSetChanged();
-                        }
+
+                        adapter.mygetitem(lastVisibleItem);
+                        adapter.notifyDataSetChanged();
+
                         isScroll = false;
                     }
                 }
@@ -243,13 +200,9 @@ public class NewsFragment extends BaseFragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        if (mytab.equals("wx")) {
-            mRecyclerView.setAdapter(wxNewsAdapter);
-            getwx(null);
-        } else if (!mytab.equals("wx")) {
-            mRecyclerView.setAdapter(adapter);
 
-            gettopnews(mytab);
-        }
+        mRecyclerView.setAdapter(adapter);
+        gettopnews(mytab);
+
     }
 }

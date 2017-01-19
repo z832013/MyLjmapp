@@ -54,8 +54,10 @@ public class WebActivity extends BaseActivity {
         url = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
         String wx = getIntent().getStringExtra("wx");
-        if (wx.equals("100")) {
-            finish();
+        if (wx != null) {
+            if (wx.equals("100")) {
+                finish();
+            }
         }
         mwebView.loadUrl(url);
         newstitle.setTitle(title);

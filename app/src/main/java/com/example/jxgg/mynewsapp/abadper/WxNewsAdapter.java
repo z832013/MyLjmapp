@@ -30,9 +30,9 @@ public class WxNewsAdapter extends BGARecyclerViewAdapter<WxModel.ListBean> {
     final int NOFOOT = 1;
     final int YESFOOT = 2;
 
-    public WxNewsAdapter(RecyclerView recyclerView, View footView) {
+    public WxNewsAdapter(RecyclerView recyclerView) {
         super(recyclerView, R.layout.item_top_new);
-        this.footView = footView;
+
     }
 
 
@@ -43,11 +43,11 @@ public class WxNewsAdapter extends BGARecyclerViewAdapter<WxModel.ListBean> {
 
     @Override
     protected void fillData(BGAViewHolderHelper helper, int position, WxModel.ListBean model) {
-        if (myitem == position) {
-            helper.setVisibility(R.id.mytv, View.VISIBLE);
-        } else {
-            helper.setVisibility(R.id.mytv, View.GONE);
-        }
+//        if (myitem == position) {
+//            helper.setVisibility(R.id.mytv, View.VISIBLE);
+//        } else {
+//            helper.setVisibility(R.id.mytv, View.GONE);
+//        }
         helper.setText(R.id.topnewstitle, model.getTitle());
         helper.setVisibility(R.id.topnewstime, View.GONE);
         LinearLayout allimage = helper.getView(R.id.imageall);
