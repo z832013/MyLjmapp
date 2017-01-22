@@ -3,7 +3,10 @@
     package="com.example.jxgg.mynewsapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!--允许一个程序接收到 ACTION_BOOT_COMPLETED广播在系统完成启动-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!--允许程序启动闹钟设置-->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <application
         android:name=".app.AppContext"
         android:allowBackup="true"
@@ -19,7 +22,23 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity.WebActivity" />
-        <activity android:name=".Activity.VideoActivity"></activity>
+        <activity android:name=".Activity.VideoActivity" />
+
+        <service android:name=".service.CountDownService">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </service>
+        <!--指定桌面小控件-->
+        <receiver android:name=".widget.CountDown">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="android.appwidget.action.CLICK_ACTION" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/xml_desktop_clock" />
+        </receiver>
     </application>
 
 </manifest>

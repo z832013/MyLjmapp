@@ -2,4 +2,18 @@
     <string name="app_name">氢应用</string>
     <string name="navigation_drawer_open">打开</string>
     <string name="navigation_drawer_close">关闭</string>
+    <string name="recommend">推荐</string>
+    <string name="live">直播</string>
+    <string name="like">关注</string>
+    <string name="setting">设置</string>
+    <string name="channels">频道</string>
+    <string name="video_image">直播截图</string>
+    <string name="search">搜索</string>
+    <string name="search_hint">请输入房间号,或关键字</string>
+    <string name="video_title">视频的标题</string>
+    <string name="time">15:38:20</string>
+    <string name="test">12%</string>
+    <string name="wifi_only">仅Wi-Fi下观看</string>
+    <string name="cache_size_clear">缓存清理</string>
+    <string name="about">关于</string>
 </resources>

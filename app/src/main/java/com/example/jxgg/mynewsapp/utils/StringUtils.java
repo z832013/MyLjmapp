@@ -18,6 +18,8 @@ package com.example.jxgg.mynewsapp.utils;
 import android.text.TextUtils;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -232,6 +234,15 @@ public final class StringUtils {
                 outBuffer.append(aChar);
         }
         return outBuffer.toString();
+    }
+    /**
+     * 获取当前系统时间 返回格式"HH:mm:ss"
+     *
+     * @return
+     */
+    public static String formatSystemTime() {
+        SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
+        return format.format(new Date());
     }
 }
 

@@ -5,5 +5,15 @@
     <color name="main">#3F51B5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000 </color>
     <color name="gray_dan">#E6E6E6</color>
+    <!--下拉刷新上拉加载-->
+    <color name="style_window_background">#fff</color>
+    <color name="style_header_bcakground">#66000000</color>
+    <color name="style_footer_bcakground">#fff</color>
+
+    <color name="normol">#fff</color>
+    <color name="press">#EBEBEB</color>
+    <color name="content_bg">#efefef</color>
+    <color name="content_item_bg">#fafafa</color>
 </resources>

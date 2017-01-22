@@ -42,7 +42,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Mainpageradapter adapter;
 
     ArrayList<Fragment> fragmentList = new ArrayList<>();
-    String[][] tabstring = new String[][]{{"头条", "top"}, {"微信", "wx"}, {"科技", "keji"}, {"娱乐", "yule"}, {"社会", "shehui"}, {"国内", "guonei"}, {"国际", "guoji"}, {"体育", "tiyu"}, {"军事", "junshi"}, {"财经", "caijing"}, {"时尚", "shishang"}};
+    //{"微信", "wx"}
+    String[][] tabstring = new String[][]{{"头条", "top"}, {"科技", "keji"}, {"娱乐", "yule"}, {"社会", "shehui"}, {"国内", "guonei"}, {"国际", "guoji"}, {"体育", "tiyu"}, {"军事", "junshi"}, {"财经", "caijing"}, {"时尚", "shishang"}};
 
     @Override
     protected void initView(Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(new Intent(MainActivity.this, VideoActivity.class));
                 break;
             case R.id.nav_gif:
+
                 break;
         }
         activity_main.closeDrawers();
