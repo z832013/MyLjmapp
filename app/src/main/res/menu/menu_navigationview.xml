@@ -12,7 +12,7 @@
             android:id="@+id/nav_video"
             android:checkable="false"
             android:icon="@drawable/ic_video"
-            android:title="视频" />
+            android:title="倒计时" />
         <item
             android:id="@+id/nav_gif"
             android:checkable="false"
